@@ -5,10 +5,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.android.dingtalk.share.ddsharemodule.DDShareApiFactory;
-import com.android.dingtalk.share.ddsharemodule.IDDShareApi;
-import com.android.dingtalk.share.ddsharemodule.message.SendAuth;
-import com.nbyjy.ddshare.Constant;
+
 import com.nbyjy.handlers.IDDShareApiHandler;
 import com.nbyjy.handlers.IDDShareResponseHandler;
 
