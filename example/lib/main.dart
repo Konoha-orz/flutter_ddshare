@@ -15,6 +15,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
+  bool _isDDAppInstalled= null;
 
   @override
   void initState() {
@@ -25,9 +26,13 @@ class _MyAppState extends State<MyApp> {
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
     String platformVersion;
+    bool isRegisterApp;
+    bool isDDAppInstalled;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       platformVersion = await FlutterDdshare.platformVersion;
+      isRegisterApp=await FlutterDdshare.registerApp('dingoaee4mq7tb6luuyugg','com.yjy.yijiayi');
+      isDDAppInstalled=await FlutterDdshare.isDDAppInstalled();
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
@@ -39,6 +44,7 @@ class _MyAppState extends State<MyApp> {
 
     setState(() {
       _platformVersion = platformVersion;
+      _isDDAppInstalled=isDDAppInstalled;
     });
   }
 
@@ -56,6 +62,10 @@ class _MyAppState extends State<MyApp> {
                 children: [Text('Running on: $_platformVersion\n')],
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [Text('Ding Ding installed: $_isDDAppInstalled\n')],
+              ),
+              Row(
                 children: [
                   FlatButton(
                       onPressed: () async {
@@ -63,6 +73,16 @@ class _MyAppState extends State<MyApp> {
                         print('====================$result');
                       },
                       child: Text('钉钉'))
+                ],
+              ),
+              Row(
+                children: [
+                  FlatButton(
+                      onPressed: () async {
+                        bool result = await FlutterDdshare.sendDDAppAuth('test');
+                        print('====================$result');
+                      },
+                      child: Text('授权'))
                 ],
               )
             ],

@@ -21,8 +21,8 @@ class FlutterDdshare {
   }
 
   /// 注册钉钉
-  static Future<bool> registerApp(String appId) async {
-    return await _channel.invokeMethod('registerApp', {"appId": appId});
+  static Future<bool> registerApp(String appId,String iosBundleId) async {
+    return await _channel.invokeMethod('registerApp', {"appId": appId,"bundleId":iosBundleId});
   }
 
   /// 是否安装了钉钉
