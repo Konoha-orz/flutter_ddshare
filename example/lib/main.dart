@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:flutter_ddshare/flutter_ddshare.dart';
+import 'package:flutter_ddshare/response/ddshare_response.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,8 +14,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
-  bool _isDDAppInstalled= null;
+  bool _isDDAppInstalled = null;
 
   @override
   void initState() {
@@ -23,28 +22,32 @@ class _MyAppState extends State<MyApp> {
     initPlatformState();
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    String platformVersion;
     bool isRegisterApp;
     bool isDDAppInstalled;
-    // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      platformVersion = await FlutterDdshare.platformVersion;
-      isRegisterApp=await FlutterDdshare.registerApp('dingoaee4mq7tb6luuyugg','com.yjy.yijiayi');
-      isDDAppInstalled=await FlutterDdshare.isDDAppInstalled();
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
+      //注册APP
+      isRegisterApp =
+          await FlutterDdshare.registerApp('youAppID', 'yourIOSBundleId');
+
+      //钉钉是否安装
+      isDDAppInstalled = await FlutterDdshare.isDDAppInstalled();
+
+      //处理回调
+      FlutterDdshare.ddResponseEventHandler.listen((resp) async {
+        //授权回调
+        if (resp is DDShareAuthResponse) {
+          print('授权回调信息=====> code: ${resp.code}  state:${resp.state}');
+        }
+      });
+    } catch (e) {
+      print(e);
     }
 
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
     if (!mounted) return;
 
     setState(() {
-      _platformVersion = platformVersion;
-      _isDDAppInstalled=isDDAppInstalled;
+      _isDDAppInstalled = isDDAppInstalled;
     });
   }
 
@@ -59,30 +62,17 @@ class _MyAppState extends State<MyApp> {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [Text('Running on: $_platformVersion\n')],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [Text('Ding Ding installed: $_isDDAppInstalled\n')],
+                children: [Text('钉钉是否安装: $_isDDAppInstalled\n')],
               ),
               Row(
                 children: [
                   FlatButton(
                       onPressed: () async {
-                        bool result = await FlutterDdshare.isDDAppInstalled();
-                        print('====================$result');
+                        bool result =
+                            await FlutterDdshare.sendDDAppAuth('test');
+                        print('授权调用 ==>$result');
                       },
-                      child: Text('钉钉'))
-                ],
-              ),
-              Row(
-                children: [
-                  FlatButton(
-                      onPressed: () async {
-                        bool result = await FlutterDdshare.sendDDAppAuth('test');
-                        print('====================$result');
-                      },
-                      child: Text('授权'))
+                      child: Text('钉钉授权'))
                 ],
               )
             ],
