@@ -1,8 +1,7 @@
 name: flutter_ddshare
-description: A new flutter plugin project.
+description: A DDShare flutter plugin project.
 version: 0.0.1
-author:
-homepage:
+homepage: https://github.com/Konoha-orz/flutter_ddshare
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
