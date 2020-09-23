@@ -44,6 +44,18 @@ public class FlutterDdsharePlugin extends FlutterActivity implements FlutterPlug
         put("sendDDAppAuth", (args, methodResult) -> {
             IDDShareApiHandler.sendDDAppAuth(args, methodResult);
         });
+        //分享文本
+        put("sendTextMessage", (args, methodResult) -> {
+            IDDShareApiHandler.sendTextMessage(args, methodResult);
+        });
+        //分享网页
+        put("sendWebPageMessage", (args, methodResult) -> {
+            IDDShareApiHandler.sendWebPageMessage(args, methodResult);
+        });
+        //分享图片
+        put("sendImageMessage", (args, methodResult) -> {
+            IDDShareApiHandler.sendImageMessage(args, methodResult);
+        });
     }};
 
     @Override

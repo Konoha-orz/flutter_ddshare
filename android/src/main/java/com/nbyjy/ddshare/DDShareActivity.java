@@ -25,7 +25,7 @@ public class DDShareActivity extends Activity implements IDDAPIEventHandler {
 
     @Override
     public void onReq(BaseReq baseReq) {
-        Log.d("lzc", "onReq=============>");
+        Log.d("FlutterDDShare", "onReq=============>");
     }
 
     @Override

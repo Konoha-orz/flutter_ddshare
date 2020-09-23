@@ -25,6 +25,9 @@ FlutterDdshare.registerApp('Your AppId', 'Your IOS BundleId')
 //钉钉是否安装
 FlutterDdshare.isDDAppInstalled()
 
+//钉钉授权
+FlutterDdshare.sendDDAppAuth('state');
+
 // 回调
 FlutterDdshare.ddResponseEventHandler.listen((resp) async {
   //授权回调信息

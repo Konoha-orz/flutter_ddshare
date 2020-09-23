@@ -28,7 +28,7 @@ class _MyAppState extends State<MyApp> {
     try {
       //注册APP
       isRegisterApp =
-          await FlutterDdshare.registerApp('youAppID', 'yourIOSBundleId');
+          await FlutterDdshare.registerApp('dingoaee4mq7tb6luuyugg', 'yourIOSBundleId');
 
       //钉钉是否安装
       isDDAppInstalled = await FlutterDdshare.isDDAppInstalled();
@@ -73,6 +73,17 @@ class _MyAppState extends State<MyApp> {
                         print('授权调用 ==>$result');
                       },
                       child: Text('钉钉授权'))
+                ],
+              ),
+              Row(
+                children: [
+                  FlatButton(
+                      onPressed: () async {
+                        bool result =
+                            await FlutterDdshare.sendTextMessage('asdsadaqweq',isSendDing: false);
+                        print('分享 ==>$result');
+                      },
+                      child: Text('分享文本'))
                 ],
               )
             ],
