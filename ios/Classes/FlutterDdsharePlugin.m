@@ -1,7 +1,8 @@
 #import "FlutterDdsharePlugin.h"
 #import <DTShareKit/DTOpenKit.h>
+#import "DdshareApiHandler.h"
 
-typedef void (^Handler)(NSObject <FlutterPluginRegistrar> *,NSDictionary<NSString *,NSObject *> *,FlutterResult);
+typedef void (^Handler)(FlutterMethodCall*,FlutterResult);
 
 @implementation FlutterDdsharePlugin{
     NSObject <FlutterPluginRegistrar> *_registrar;
@@ -9,44 +10,42 @@ typedef void (^Handler)(NSObject <FlutterPluginRegistrar> *,NSDictionary<NSStrin
     NSString *_bundleId;
     NSString *_appId;
     FlutterMethodChannel *_channel;
+    DdshareApiHandler *_ddshareApiHandler;
 }
 
 - (instancetype) initWithFlutterPluginRegistrar:(NSObject <FlutterPluginRegistrar> *) registrar{
     self = [super init];
     if(self){
         _registrar=registrar;
+        _ddshareApiHandler=[[DdshareApiHandler alloc]initWithRegistrar:registrar methodChannel:_channel];
         //方法调用处理
         _handlerMap=@{
-            @"getPlatformVersion":^(NSObject <FlutterPluginRegistrar> * registrar,NSDictionary<NSString *,id> * args,FlutterResult methodResult){
-                methodResult([@"iOS " stringByAppendingString:
-                              [[UIDevice currentDevice] systemVersion]]);
+            @"getPlatformVersion":^(FlutterMethodCall* call,FlutterResult result){
+                [_ddshareApiHandler getPlatformVersion:call result:result];
             },
-            @"registerApp":^(NSObject <FlutterPluginRegistrar> * registrar,NSDictionary<NSString *,id> * args,FlutterResult methodResult){
+            @"registerApp":^(FlutterMethodCall* call,FlutterResult result){
+                //记录注册信息
+                NSDictionary<NSString *,id> *args=(NSDictionary<NSString *,id> *)[call arguments];
                 NSString* appId=(NSString*) args[@"appId"];
                 _appId=appId;
                 NSString* bundleId=(NSString*) args[@"bundleId"];
                 _bundleId=bundleId;
-                BOOL registerResult= [DTOpenAPI registerApp: appId];
-                NSLog(@"[FlutterDDShareLog]:注册API==>%@",registerResult?@"YES":@"NO");
-                methodResult(@(registerResult));
+                [_ddshareApiHandler registerApp:call result:result];
             },
-            @"isDDAppInstalled":^(NSObject <FlutterPluginRegistrar> * registrar,NSDictionary<NSString *,id> * args,FlutterResult methodResult){
-                BOOL installed=[DTOpenAPI isDingTalkInstalled];
-                methodResult(@(installed));
+            @"isDDAppInstalled":^(FlutterMethodCall* call,FlutterResult result){
+                [_ddshareApiHandler isDDAppInstalled:call result:result];
             },
-            @"sendDDAppAuth":^(NSObject <FlutterPluginRegistrar> * registrar,NSDictionary<NSString *,id> * args,FlutterResult methodResult){
-                // send oauth request
-                DTAuthorizeReq *authReq = [DTAuthorizeReq new];
-                authReq.bundleId = _bundleId;
-                BOOL result = [DTOpenAPI sendReq:authReq];
-                if (result) {
-                    NSLog(@"授权登录 发送成功.");
-                    methodResult([NSNumber numberWithBool:result]);
-                }
-                else {
-                    NSLog(@"授权登录 发送失败.");
-                    methodResult([FlutterError errorWithCode:@"authError" message:@"授权失败" details:authReq]);
-                }
+            @"sendDDAppAuth":^(FlutterMethodCall* call,FlutterResult result){
+                [_ddshareApiHandler sendDDAppAuth:call result:result bundleId:_bundleId];
+            },
+            @"sendTextMessage":^(FlutterMethodCall* call,FlutterResult result){
+                [_ddshareApiHandler sendTextMessage:call result:result];
+            },
+            @"sendWebPageMessage":^(FlutterMethodCall* call,FlutterResult result){
+                [_ddshareApiHandler sendWebPageMessage:call result:result];
+            },
+            @"sendImageMessage":^(FlutterMethodCall* call,FlutterResult result){
+                [_ddshareApiHandler sendImageMessage:call result:result];
             },
         };
     }
@@ -69,10 +68,8 @@ typedef void (^Handler)(NSObject <FlutterPluginRegistrar> *,NSDictionary<NSStrin
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
-    NSDictionary<NSString *,id> *args=(NSDictionary<NSString *,id> *)[call arguments];
-    
     if(_handlerMap[call.method]!=nil){
-        _handlerMap[call.method](_registrar,args,result);
+        _handlerMap[call.method](call,result);
     }
     else {
         result(FlutterMethodNotImplemented);
