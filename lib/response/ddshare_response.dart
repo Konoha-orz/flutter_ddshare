@@ -4,11 +4,14 @@ const String _mTransaction = "mTransaction";
 
 typedef BaseDDShareResponse _DDShareResponseInvoker(Map argument);
 
+///Response callback mapping
 Map<String, _DDShareResponseInvoker> _nameAndResponseMapper = {
   "onShareResponse": (Map argument) => DDShareResponse.fromMap(argument),
   "onAuthResponse": (Map argument) => DDShareAuthResponse.fromMap(argument),
 };
 
+///Base DingTalk Response callback;
+///基础响应
 class BaseDDShareResponse {
   final int mErrCode;
   final String mErrStr;
@@ -23,6 +26,8 @@ class BaseDDShareResponse {
       _nameAndResponseMapper[name](argument);
 }
 
+///DingTalk share message response
+///钉钉分享响应
 class DDShareResponse extends BaseDDShareResponse {
   final int type;
 
@@ -31,6 +36,8 @@ class DDShareResponse extends BaseDDShareResponse {
         super._(map[_mErrCode], map[_mErrStr], map[_mTransaction]);
 }
 
+///DingTalk auth message response
+///钉钉授权响应
 class DDShareAuthResponse extends BaseDDShareResponse {
   final String code;
   final String state;
@@ -41,6 +48,7 @@ class DDShareAuthResponse extends BaseDDShareResponse {
         super._(map[_mErrCode], map[_mErrStr], map[_mTransaction]);
 }
 
+///错误代码
 class ErrCode {
   static const ERR_OK = 0;
   static const ERR_COMM = -1;

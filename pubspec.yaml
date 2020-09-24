@@ -1,5 +1,5 @@
 name: flutter_ddshare
-description: A DingTalk(钉钉) flutter plugin project.
+description: A DingTalk(钉钉) flutter plugin project.Developers can use ddsharesdk easily, such as sharing text ,webpage,image and auth request.
 version: 1.0.0
 homepage: https://github.com/Konoha-orz/flutter_ddshare
 

@@ -37,6 +37,7 @@ class _MyAppState extends State<MyApp> {
       FlutterDdshare.ddResponseEventHandler.listen((resp) async {
         //授权回调
         if (resp is DDShareAuthResponse) {
+          //开发者确保回调state 与调用授权时传入state一致
           print('授权回调信息=====> code: ${resp.code}  state:${resp.state}');
         }
       });
