@@ -27,8 +27,8 @@ class _MyAppState extends State<MyApp> {
     bool isDDAppInstalled;
     try {
       //注册APP
-      isRegisterApp =
-          await FlutterDdshare.registerApp('dingoaee4mq7tb6luuyugg', 'yourIOSBundleId');
+      isRegisterApp = await FlutterDdshare.registerApp(
+          'dingoaee4mq7tb6luuyugg', 'yourIOSBundleId');
 
       //钉钉是否安装
       isDDAppInstalled = await FlutterDdshare.isDDAppInstalled();
@@ -80,10 +80,37 @@ class _MyAppState extends State<MyApp> {
                   FlatButton(
                       onPressed: () async {
                         bool result =
-                            await FlutterDdshare.sendTextMessage('asdsadaqweq',isSendDing: false);
+                            await FlutterDdshare.sendTextMessage('分享文本');
                         print('分享 ==>$result');
                       },
                       child: Text('分享文本'))
+                ],
+              ),
+              Row(
+                children: [
+                  FlatButton(
+                      onPressed: () async {
+                        bool result = await FlutterDdshare.sendImageMessage(
+                            picUrl:
+                                'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png');
+                        print('分享 ==>$result');
+                      },
+                      child: Text('分享图片'))
+                ],
+              ),
+              Row(
+                children: [
+                  FlatButton(
+                      onPressed: () async {
+                        bool result = await FlutterDdshare.sendWebPageMessage(
+                            'https://www.baidu.com/',
+                            title: '标题',
+                            content: '描述2333',
+                            thumbUrl:
+                                'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png');
+                        print('分享 ==>$result');
+                      },
+                      child: Text('分享链接'))
                 ],
               )
             ],

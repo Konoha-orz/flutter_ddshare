@@ -1,6 +1,6 @@
 name: flutter_ddshare
-description: A DDShare(钉钉) flutter plugin project.
-version: 0.0.1+1
+description: A DingTalk(钉钉) flutter plugin project.
+version: 1.0.0
 homepage: https://github.com/Konoha-orz/flutter_ddshare
 
 environment:

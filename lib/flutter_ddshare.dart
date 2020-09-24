@@ -83,7 +83,7 @@ class FlutterDdshare {
     return result;
   }
 
-  /// 分享图片
+  /// 分享图片（IOS端必传picUrl）
   static Future<bool> sendImageMessage(
       {bool isSendDing = false, String picUrl, String picPath}) async {
     //必传一个

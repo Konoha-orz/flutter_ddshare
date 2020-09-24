@@ -28,6 +28,16 @@ FlutterDdshare.isDDAppInstalled()
 //钉钉授权
 FlutterDdshare.sendDDAppAuth('state');
 
+//分享文本
+FlutterDdshare.sendTextMessage('分享文本');
+
+//分享图片
+FlutterDdshare.sendImageMessage(picUrl:'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png');
+
+//分享链接
+FlutterDdshare.sendWebPageMessage('https://www.baidu.com/',title: '标题',content: '描述2333',
+                                  thumbUrl:'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png');
+
 // 回调
 FlutterDdshare.ddResponseEventHandler.listen((resp) async {
   //授权回调信息
