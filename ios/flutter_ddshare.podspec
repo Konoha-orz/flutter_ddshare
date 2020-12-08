@@ -18,6 +18,8 @@ A new flutter plugin project.
   s.dependency 'Flutter'
   s.platform = :ios, '8.0'
   # include project framework
+
+  #资源导入
   s.vendored_frameworks = '**/*.framework'
   # include project .a
   s.vendored_libraries = '**/*.a'
