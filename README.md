@@ -4,13 +4,18 @@
 
 ## 配置
 ### ios端
+1. Build Settings 中设置Allow Non-modular Includes In Framework Modules 为YES
+
+![](instruction_1.jpg)
+
 1. 在Other Linker Flags添加 `-all_load` 选项；
 
 ![](https://img.alicdn.com/tps/TB118c9KVXXXXcIaXXXXXXXXXXX-808-201.png#align=left&display=inline&height=186&originHeight=201&originWidth=808&status=done&width=746)
 
-2. 将申请的appId添加到URL Types中作为钉钉回调的scheme, identifier 填写dingtalk; URL Schemes填写申请的AppId。 iOS9及以后的系统需要将钉钉和分享SDK的scheme配置在Info.plist。LSApplicationQueriesSchemes列表中，scheme分别为 dingtalk, dingtalk-open
+3. 将申请的appId添加到URL Types中作为钉钉回调的scheme, identifier 填写dingtalk; URL Schemes填写申请的AppId。 iOS9及以后的系统需要将钉钉和分享SDK的scheme配置在Info.plist。LSApplicationQueriesSchemes列表中，scheme分别为 dingtalk, dingtalk-open
 
 ![](https://img.alicdn.com/tps/TB1QyhdLXXXXXbZXVXXXXXXXXXX-973-709.png#align=left&display=inline&height=498&originHeight=709&originWidth=973&status=done&width=684)
+
 ### Android端
 暂不需要配置
 
