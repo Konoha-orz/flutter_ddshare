@@ -8,7 +8,7 @@
 
 ![](instruction_1.jpg)
 
-1. 在Other Linker Flags添加 `-all_load` 选项；
+2. 在Other Linker Flags添加 `-all_load` 选项；
 
 ![](https://img.alicdn.com/tps/TB118c9KVXXXXcIaXXXXXXXXXXX-808-201.png#align=left&display=inline&height=186&originHeight=201&originWidth=808&status=done&width=746)
 
